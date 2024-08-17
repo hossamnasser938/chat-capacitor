@@ -1,5 +1,6 @@
 import { DataManager } from "../../data";
 import { Dialog } from "@capacitor/dialog";
+import { ERRORS } from "../../data/errors";
 
 export const useRegistration = () => {
   const submitHandler = async (username: string, fullname: string) => {
@@ -10,18 +11,24 @@ export const useRegistration = () => {
       return;
     }
 
-    const userExists = await DataManager.doesUserNameExist(username);
-
-    if (userExists) {
+    try {
+      await DataManager.createUser({ username, fullname });
       Dialog.alert({
-        message: "user exists. pick another username",
+        message: "Registration completed",
       });
-      return;
+    } catch (error: any) {
+      console.log("🚀 ~ useRegistration submitHandler ~ error:", error);
+      if (error.message.includes(ERRORS.USERNAME_EXISTS)) {
+        Dialog.alert({
+          message:
+            "Failed to register. Username exists, please pick another username",
+        });
+      } else {
+        Dialog.alert({
+          message: "Failed to register. Unexpected error",
+        });
+      }
     }
-
-    Dialog.alert({
-      message: "registeration coming soon",
-    });
   };
   return { submitHandler };
 };
