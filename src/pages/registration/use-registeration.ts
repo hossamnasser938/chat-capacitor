@@ -1,11 +1,11 @@
 import { DataManager } from "../../data";
-import { Dialog } from "@capacitor/dialog";
 import { ERRORS, isErrorOfType } from "../../data/errors";
+import { UIReporter } from "../../utils/ui-reporter";
 
 export const useRegistration = () => {
   const submitHandler = async (username: string, fullname: string) => {
     if (!username || !fullname) {
-      Dialog.alert({
+      UIReporter.reportError({
         message: "please fill required input fields",
       });
       return;
@@ -13,18 +13,18 @@ export const useRegistration = () => {
 
     try {
       await DataManager.createUser({ username, fullname });
-      Dialog.alert({
+      UIReporter.reportSuccess({
         message: "Registration completed",
       });
     } catch (error) {
       console.log("🚀 ~ useRegistration submitHandler ~ error:", error);
       if (isErrorOfType({ error, errorType: ERRORS.USERNAME_EXISTS })) {
-        Dialog.alert({
+        UIReporter.reportError({
           message:
             "Failed to register. Username exists, please pick another username",
         });
       } else {
-        Dialog.alert({
+        UIReporter.reportError({
           message: "Failed to register. Unexpected error",
         });
       }
