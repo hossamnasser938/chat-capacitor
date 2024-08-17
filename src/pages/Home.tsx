@@ -1,9 +1,9 @@
 import React from "react";
 import "./Home.css";
-import { RegistrationPage } from "./registration";
+import { LoginPage } from "./login";
 
 const Home: React.FC = () => {
-  return <RegistrationPage />;
+  return <LoginPage />;
 };
 
 export default Home;
