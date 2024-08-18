@@ -3,7 +3,11 @@ import "./Home.css";
 import { LoginPage } from "./login";
 
 const Home: React.FC = () => {
-  return <LoginPage />;
+  return (
+    <div>
+      <p>Home</p>
+    </div>
+  );
 };
 
 export default Home;

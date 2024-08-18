@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./registration.css";
 import { Button, Input } from "../../components";
 import { useRegistration } from "./use-registeration";
+import { IonItem, IonLabel } from "@ionic/react";
+import { NAVIGATION_ROUTES } from "../../navigation";
 
 export const RegistrationPage = () => {
   const { submitHandler } = useRegistration();
@@ -32,6 +34,9 @@ export const RegistrationPage = () => {
       <div className="wrapper">
         <Button onClick={_submitHandler}>Submit</Button>
       </div>
+      <IonItem routerLink={NAVIGATION_ROUTES.Login}>
+        <IonLabel>Already have account? login</IonLabel>
+      </IonItem>
     </div>
   );
 };
