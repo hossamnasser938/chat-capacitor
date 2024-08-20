@@ -3,10 +3,12 @@ import { FirebaseDB } from "./firebase";
 
 export class DataManager {
   static async login({ username }: { username: string }) {
-    const userExists = await FirebaseDB.doesUserExist({ username });
-    if (!userExists) {
+    const user = await FirebaseDB.getUser({ username });
+    if (!user) {
       throw new Error(ERRORS.USER_NOT_FOUND);
     }
+
+    return user;
   }
 
   static async createUser({

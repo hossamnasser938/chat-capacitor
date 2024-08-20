@@ -3,9 +3,11 @@ import { DataManager } from "../../data";
 import { ERRORS, isErrorOfType } from "../../data/errors";
 import { UIReporter } from "../../utils/ui-reporter";
 import { NAVIGATION_ROUTES } from "../../navigation";
+import { useRootStore } from "../../state";
 
 export const useLogin = () => {
   const history = useHistory();
+  const { setUser } = useRootStore();
 
   const navigateToHome = () => {
     history.push(NAVIGATION_ROUTES.Home);
@@ -13,7 +15,8 @@ export const useLogin = () => {
 
   const submitHandler = async (username: string) => {
     try {
-      await DataManager.login({ username });
+      const user = await DataManager.login({ username });
+      setUser(user);
       UIReporter.reportSuccess({ message: "Login completed" });
       navigateToHome();
     } catch (error) {
