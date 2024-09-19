@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./login.css";
 import { Button, Input } from "../../components";
 import { useLogin } from "./use-login";
 import { IonItem, IonLabel } from "@ionic/react";
@@ -15,15 +14,16 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="container">
-      <div className="wrapper">
+    <div className="flex flex-col justify-center items-center h-full">
+      <div className="m-2">
         <Input
+          className="border"
           placeholder="username"
           value={username}
           onChange={(even) => setUsername(even.target.value)}
         />
       </div>
-      <div className="wrapper">
+      <div className="m-2">
         <Button onClick={_submitHandler}>Submit</Button>
       </div>
       <IonItem routerLink={NAVIGATION_ROUTES.Register}>

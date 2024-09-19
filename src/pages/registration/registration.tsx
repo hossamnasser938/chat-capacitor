@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./registration.css";
 import { Button, Input } from "../../components";
 import { useRegistration } from "./use-registeration";
 import { IonItem, IonLabel } from "@ionic/react";
@@ -16,16 +15,18 @@ export const RegistrationPage = () => {
   };
 
   return (
-    <div className="container">
-      <div className="wrapper">
+    <div className="flex flex-col justify-center items-center h-full">
+      <div className="m-2">
         <Input
+          className="border"
           placeholder="username"
           value={username}
           onChange={(even) => setUsername(even.target.value)}
         />
       </div>
-      <div className="wrapper">
+      <div className="m-2">
         <Input
+          className="border"
           placeholder="full name"
           value={fullname}
           onChange={(even) => setFullname(even.target.value)}
