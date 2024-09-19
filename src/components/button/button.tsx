@@ -1,11 +1,13 @@
 import React from "react";
 import { IButtonProps } from "./button.types";
 import { mergeClassNames } from "../../utils/helper-functions";
-import "./button.css";
 
 export const Button = (props: IButtonProps) => {
   const { className, ...restProps } = props;
-  const _className = mergeClassNames("button", className || "");
+  const _className = mergeClassNames(
+    "p-4 bg-black text-white rounded-lg font-bold text-md",
+    className || ""
+  );
 
-  return <button className={_className} {...props} />;
+  return <button className={_className} {...restProps} />;
 };
