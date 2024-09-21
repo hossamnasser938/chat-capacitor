@@ -4,10 +4,13 @@ import { ERRORS, isErrorOfType } from "../../data/errors";
 import { UIReporter } from "../../utils/ui-reporter";
 import { NAVIGATION_ROUTES } from "../../navigation";
 import { useRootStore } from "../../state";
+import { useState } from "react";
 
 export const useLogin = () => {
   const history = useHistory();
   const { setUser } = useRootStore();
+
+  const [loading, setLoading] = useState(false);
 
   const navigateToHome = () => {
     history.push(NAVIGATION_ROUTES.Home);
@@ -15,6 +18,7 @@ export const useLogin = () => {
 
   const submitHandler = async (username: string) => {
     try {
+      setLoading(true);
       const user = await DataManager.login({ username });
       setUser(user);
       UIReporter.reportSuccess({ message: "Login completed" });
@@ -28,8 +32,10 @@ export const useLogin = () => {
           message: "Failed to login. Unexpected error",
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { submitHandler };
+  return { submitHandler, loading };
 };

@@ -3,9 +3,12 @@ import { DataManager } from "../../data";
 import { ERRORS, isErrorOfType } from "../../data/errors";
 import { UIReporter } from "../../utils/ui-reporter";
 import { NAVIGATION_ROUTES } from "../../navigation";
+import { useState } from "react";
 
 export const useRegistration = () => {
   const history = useHistory();
+
+  const [loading, setLoading] = useState(false);
 
   const navigateToHome = () => {
     history.push(NAVIGATION_ROUTES.Home);
@@ -20,6 +23,7 @@ export const useRegistration = () => {
     }
 
     try {
+      setLoading(true);
       await DataManager.createUser({ username, fullname });
       UIReporter.reportSuccess({
         message: "Registration completed",
@@ -37,7 +41,10 @@ export const useRegistration = () => {
           message: "Failed to register. Unexpected error",
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
-  return { submitHandler };
+
+  return { submitHandler, loading };
 };
